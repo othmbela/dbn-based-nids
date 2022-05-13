@@ -1,6 +1,6 @@
 # ML-based IDS on the CICIDS2017 Dataset
 [![python](https://img.shields.io/badge/python-3.8.2-blue?style=plastic&logo=python)](https://www.python.org/downloads/release/python-382/)
-[![pip](https://img.shields.io/badge/pypi-v21.3.1-informational?style=plastic&logo=pypi)](https://pypi.org/project/pip/21.3.1/)
+[![pip](https://img.shields.io/badge/pypi-v22.1-informational?style=plastic&logo=pypi)](https://pypi.org/project/pip/22.1/)
 
 [[_TOC_]]
 
@@ -15,12 +15,12 @@ Several Intrusion Detection System (IDS) has been developed. Traditional IDS bas
 
 Start by cloning the project:
 ```bash
-    $ git clone git@ssh.dev.azure.com:v3/toshiba-bril/BRIL%20Federated%20Learning/DBN-FL
+    $ git clone https://github.com/othmbela/dbn-based-nids.git
 ```
 
 Then cd into your the cloned repository as such:
 ```bash
-    $ cd ml-based-ids
+    $ cd dbn-based-nids
 ```
 
 Project dependencies (such as `torch` and `flwr`) are defined in `requirements.txt`. You can install those dependencies and manage your dependencies using Python virtual environment, but feel free to use a different way of installing dependencies and managing virtual environments if you have other preferences.
@@ -38,13 +38,13 @@ Project dependencies (such as `torch` and `flwr`) are defined in `requirements.t
 
 ## Data Preparation
 
-* Download the dataset from the Kaggle competition [here](https://www.kaggle.com/c/instacart-market-basket-analysis/overview).
+* Download the dataset from [here](https://www.unb.ca/cic/datasets/ids-2017.html).
 * Move the CSV files to the following directory ***./data/raw/***
 * Then, create and preprocess the dataset using this following command line:
 ```bash
     $ make dataset
 ```
-It will generate multiple pickle files that will we use to train our models.
+It will generate multiple pickle files that will we use to train and evaluate our models.
 
 
 ## Usage
@@ -115,7 +115,6 @@ Additional configurations can be added in the future, currently to start our RNN
     ├── configs/
     │
     ├── data/                                               # default directory for storing input data.
-    │   ├── interim                                         # intermediate data that has been transformed.
     │   ├── processed                                       # final data for modelling.
     │   └── raw                                             # original data.
     │
@@ -126,11 +125,11 @@ Additional configurations can be added in the future, currently to start our RNN
     │
     ├── models/                                             # pytorch models.
     │   ├── __init__.py
-    │   ├── NN.py
-    │   └── RNN.py
+    │   ├── DBN.py
+    │   ├── MLP.py
+    │   └── RBM.py
     │
     ├── notebooks/                                          # jupyter notebooks.
-    │   └── XGBoost Classifier.ipynb                        # benchmark implementation.
     │
     ├── preprocessing/                                      # scripts for preprocessing the dataset.
     │
