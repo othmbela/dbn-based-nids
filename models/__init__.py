@@ -1,3 +1,3 @@
 from .DBN import *
-from .NN import *
+from .MLP import *
 from .RBM import *

@@ -1,10 +1,10 @@
 import torch.nn as nn
 
 
-class NN(nn.Module):
+class MLP(nn.Module):
 
     def __init__(self, num_features=47, hidden1_size=64, hidden2_size=64, num_classes=6):
-        super(NN, self).__init__()
+        super(MLP, self).__init__()
         self.fc1 = nn.Linear(num_features, hidden1_size)
         self.relu1 = nn.ReLU()
         self.fc2 = nn.Linear(hidden1_size, hidden2_size)
