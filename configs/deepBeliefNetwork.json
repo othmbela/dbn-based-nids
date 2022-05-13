@@ -1,0 +1,44 @@
+{
+    "name": "neural_network",
+    "model": {
+        "type": "NN",
+        "args": {
+            "num_features": 61,
+            "hidden1_size": 100,
+            "hidden2_size": 200,
+            "hidden3_size": 100,
+            "hidden4_size": 50,
+            "num_classes": 1
+        }
+    },
+    "data_loader": {
+        "type": "InstacartDataLoader",
+        "args": {
+            "batch_size": 128
+        }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args": {
+            "lr": 0.001,
+            "weight_decay": 0,
+            "amsgrad": false
+        }
+    },
+    "loss": {
+        "type": "BCEWithLogitsLoss",
+        "args": {
+            "reduction": "mean"
+        }
+    },
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 1,
+            "gamma": 0.95
+        }
+    },
+    "trainer": {
+        "num_epochs": 10
+    }
+}
