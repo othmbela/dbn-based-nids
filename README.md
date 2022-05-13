@@ -12,7 +12,7 @@
 * [Usage](#usage)
 * [Files and Folders structure](#files-and-folders-structure)
 * [Requirements](#requirements)
-* [Author](#author)
+* [Authors](#authors)
 
 
 ## Introduction
@@ -159,6 +159,6 @@ Additional configurations can be added in the future, currently to start our RNN
 
 All the experiments were conducted using a 64-bit Intel(R) Core(TM) i7-7500U CPU with 16GB RAM in a Ubuntu-Linux environment. The models have been implemented and trained in Python v3.8.2 using the Pytorch v1.10.2 library.
 
-## Author
+## Authors
 
-**Othmane Belarbi**
+**Othmane Belarbi**, **Theo Spyridopoulos**, **Aftab Khan** and **Pietro Carnelli**
