@@ -1,4 +1,4 @@
-# ML-based IDS on the CICIDS2017 Dataset
+# DBN-based NIDS on the CICIDS2017 Dataset
 [![python](https://img.shields.io/badge/python-3.8.2-blue?style=plastic&logo=python)](https://www.python.org/downloads/release/python-382/)
 [![pip](https://img.shields.io/badge/pypi-v22.1-informational?style=plastic&logo=pypi)](https://pypi.org/project/pip/22.1/)
 
@@ -17,7 +17,7 @@
 
 ## Introduction
 
-In this repository, we propose a multi-class classification NIDS based on Deep Belief Networks (DBNs). DBN is a generative graphical model formed by stacking multiple Restricted Boltzmann Machines (RBMs). It can identify and learn high-dimensional representations due to its deep architecture.
+In this repository, we propose a multi-class classification NIDS based on Deep Belief Networks (DBNs). DBN is a generative graphical model formed by stacking multiple Restricted Boltzmann Machines (RBMs). It can identify and learn high-dimensional representations due to its deep architecture. We conducted multiple experiments using the CICIDS2017 dataset with various class-balancing techniques.
 
 
 ## Installation
