@@ -2,49 +2,53 @@
 [![python](https://img.shields.io/badge/python-3.8.2-blue?style=plastic&logo=python)](https://www.python.org/downloads/release/python-382/)
 [![pip](https://img.shields.io/badge/pypi-v22.1-informational?style=plastic&logo=pypi)](https://pypi.org/project/pip/22.1/)
 
-[[_TOC_]]
+
+## Table of contents
+
+* [Introduction](#introduction)
+* [Installation](#installation)
+    * [Dependencies](#dependencies)
+* [Data Preparation](#data-preparation)
+* [Usage](#usage)
+* [Files and Folders structure](#files-and-folders-structure)
+* [Requirements](#requirements)
+* [Author](#author)
+
 
 ## Introduction
 
-Several Intrusion Detection System (IDS) has been developed. Traditional IDS base their operation on Machine Learning models learned centrally in the cloud and then distributed across multiple hosts. However, this centraliSed approach hinders knowledge sharing among system owners due to privacy/secrecy violation concerns. 
-
-![Network Intrusion Detection System](./assets/network-intrusion-detection.png)
+In this repository, we propose a multi-class classification NIDS based on Deep Belief Networks (DBNs). DBN is a generative graphical model formed by stacking multiple Restricted Boltzmann Machines (RBMs). It can identify and learn high-dimensional representations due to its deep architecture.
 
 
-## Project Setup
+## Installation
 
-Start by cloning the project:
-```bash
-    $ git clone https://github.com/othmbela/dbn-based-nids.git
-```
-
-Then cd into your the cloned repository as such:
-```bash
-    $ cd dbn-based-nids
-```
-
-Project dependencies (such as `torch` and `flwr`) are defined in `requirements.txt`. You can install those dependencies and manage your dependencies using Python virtual environment, but feel free to use a different way of installing dependencies and managing virtual environments if you have other preferences.
-
-1. Create and fire up your virtual environment:
+* If you want to run the scripts, first ensure you have python globally installed in your computer. If not, you can get python [here](https://www.python.org).
+* Then, clone the repo to your PC and change the branch:
     ```bash
-        $ python3 -m venv venv
-        $ source venv/bin/activate
+        $ git clone https://github.com/othmbela/dbn-based-nids.git
     ```
-2. Install the dependencies needed to run the app:
-    ```bash
-        $ pip install -r requirements.txt
-    ```
+
+* ### Dependencies
+    1. Cd into your the cloned repository as such:
+        ```bash
+            $ cd dbn-based-nids
+        ```
+    2. Initialise the project as such:
+        ```bash
+            $ make init
+        ```
+    First, the command line will create your virtual environment and install the dependencies needed to run the app. Then, it will create the data folders.
 
 
 ## Data Preparation
 
 * Download the dataset from [here](https://www.unb.ca/cic/datasets/ids-2017.html).
 * Move the CSV files to the following directory ***./data/raw/***
-* Then, create and preprocess the dataset using this following command line:
+* Then, create and pre-process the dataset using this following command line:
 ```bash
     $ make dataset
 ```
-It will generate multiple pickle files that will we use to train and evaluate our models.
+It will generate multiple pickle files that will we use to train and evaluate our models. More details about the pre-processing can be found [here](preprocessing/README.md#data-pre-processing-of-the-cicids2017).
 
 
 ## Usage
