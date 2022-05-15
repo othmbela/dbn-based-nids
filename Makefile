@@ -20,18 +20,9 @@ init: $(BIN)/activate
 	mkdir -p ./data/raw
 
 
-dataset: prepare_venv
-	$(BIN)/python ./preprocessing/create_user_features.py
-	$(BIN)/python ./preprocessing/create_product_features.py
-	$(BIN)/python ./preprocessing/create_user_x_product_features.py
-	$(BIN)/python ./preprocessing/create_datetime_features.py
-	$(BIN)/python ./preprocessing/merge_features.py
-	$(BIN)/python ./preprocessing/process.py
-
-
 run: prepare_venv
-	$(BIN)/python main.py --config ./configs/neuralNetwork.json
-	$(BIN)/python main.py --config ./configs/recurrentNeuralNetwork.json
+	$(BIN)/python main.py --config ./configs/deepBeliefNetwork.json
+	$(BIN)/python main.py --config ./configs/multilayerPerceptron.json
 
 
 clean:
