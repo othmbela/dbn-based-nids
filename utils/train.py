@@ -80,24 +80,31 @@ def train(
         logging.info(f"Epoch {epoch}/{num_epochs}:")
         for inputs, labels in tqdm(train_loader):
             inputs, labels = inputs.to(device), labels.to(device)
+            labels = labels.squeeze(1)
 
             # zero the parameter gradients
-            optimizer.zero_grad()
+            for opt in optimizer:
+                opt.zero_grad()
+
+            # Passing the batch down the model
             outputs = model(inputs)
 
             # forward + backward + optimize
-            loss = criterion(outputs, labels.unsqueeze(1))
+            loss = criterion(outputs, labels)
             loss.backward()
-            optimizer.step()
+
+            # For every possible optimizer performs the gradient update
+            for opt in optimizer:
+                opt.step()
 
             train_loss += loss.cpu().item()
             train_steps += 1
 
-            predicted = (torch.sigmoid(outputs) >= 0.21).float().squeeze()
+            _, predicted = torch.max(outputs.data, 1)
             train_total += labels.size(0)
             train_correct += (predicted == labels).sum().item()
 
-            train_output_pred += predicted.tolist()
+            train_output_pred += outputs.argmax(1).cpu().tolist()
             train_output_true += labels.tolist()
 
         ########################################
@@ -116,18 +123,19 @@ def train(
         with torch.no_grad():
             for inputs, labels in valid_loader:
                 inputs, labels = inputs.to(device), labels.to(device)
+                labels = labels.squeeze(1)
 
                 outputs = model(inputs)
 
-                loss = criterion(outputs, labels.unsqueeze(1))
+                loss = criterion(outputs, labels)
                 val_loss += loss.cpu().numpy()
                 val_steps += 1
 
-                predicted = (torch.sigmoid(outputs) >= 0.21).float().squeeze()
+                _, predicted = torch.max(outputs.data, 1)
                 val_total += labels.size(0)
                 val_correct += (predicted == labels).sum().item()
 
-                val_output_pred += predicted.tolist()
+                val_output_pred += outputs.argmax(1).cpu().tolist()
                 val_output_true += labels.tolist()
 
         history['train']['total'] = train_total

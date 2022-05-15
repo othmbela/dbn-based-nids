@@ -2,6 +2,7 @@ from tqdm import tqdm
 import logging
 
 import torch
+import torch.nn as nn
 
 
 def test(
@@ -54,22 +55,22 @@ def test(
 
     with torch.no_grad():
         for (inputs, labels) in tqdm(test_loader):
-
             inputs, labels = inputs.to(device), labels.to(device)
+            labels = labels.squeeze(1)
 
             outputs = model(inputs)
             
-            loss = criterion(outputs, labels.unsqueeze(1))
+            loss = criterion(outputs, labels)
             test_loss += loss.cpu().item()
             test_steps += 1
 
-            predicted = (torch.sigmoid(outputs) >= 0.21).float().squeeze()
+            _, predicted = torch.max(outputs.data, 1)
             test_total += labels.size(0)
             test_correct += (predicted == labels).sum().item()
 
-            test_output_pred += predicted.tolist()
+            test_output_pred += outputs.argmax(1).cpu().tolist()
             test_output_true += labels.tolist()
-            test_output_pred_prob += torch.sigmoid(outputs).squeeze().tolist()
+            test_output_pred_prob += nn.functional.softmax(outputs, dim=0).cpu().tolist()
 
     history['test']['total'] = test_total
     history['test']['loss'] = test_loss/test_steps

@@ -26,45 +26,41 @@ class CICIDSDataset(Dataset):
 
     def __getitem__(self, idx):
         feature = self.features.iloc[idx, :]
-        label = self.labels.iloc[idx, :]
+        label = self.labels.iloc[idx]
         if self.transform:
-            feature = self.transform(feature.values)
+            feature = self.transform(feature.values, dtype=torch.float32)
         if self.target_transform:
-            label = self.target_transform(label.values[0])
+            label = self.target_transform(label, dtype=torch.int64)
         return feature, label
 
 
-def get_dataset(train_data_path="/Users/othmanebelarbi/Desktop/Toshiba/DBN-FL/datasets/train",
-                val_data_path="/Users/othmanebelarbi/Desktop/Toshiba/DBN-FL/datasets/val",
-                test_data_path="/Users/othmanebelarbi/Desktop/Toshiba/DBN-FL/datasets/test"):
+def get_dataset(data_path: str, balanced: bool):
 
-    # MAC Path:
-    #     train_data_path=/Users/othmanebelarbi/Desktop/Toshiba/DBN-FL/datasets/train/
-    #     val_data_path=/Users/othmanebelarbi/Desktop/Toshiba/DBN-FL/datasets/val/
-    #     test_data_path=/Users/othmanebelarbi/Desktop/Toshiba/DBN-FL/datasets/test/
-
-    # Windows Path:
-    #     train_data_path=r"C:\Users\Othmane Belarbi\Documents\DBN-FL\datasets\train\"
-    #     val_data_path=r"C:\Users\Othmane Belarbi\Documents\DBN-FL\datasets\val\"
-    #     test_data_path=r"C:\Users\Othmane Belarbi\Documents\DBN-FL\datasets\test\"
-
-    train_data = CICIDSDataset(
-        features_file=f"{train_data_path}/train_features.pkl",
-        target_file=f"{train_data_path}/train_labels.pkl",
-        transform=torch.tensor,
-        target_transform=torch.tensor
-    )
+    if balanced:
+        train_data = CICIDSDataset(
+            features_file=f"{data_path}/processed/train/train_features_balanced.pkl",
+            target_file=f"{data_path}/processed/train/train_labels_balanced.pkl",
+            transform=torch.tensor,
+            target_transform=torch.tensor
+        )
+    else:
+        train_data = CICIDSDataset(
+            features_file=f"{data_path}/processed/train/train_features.pkl",
+            target_file=f"{data_path}/processed/train/train_labels.pkl",
+            transform=torch.tensor,
+            target_transform=torch.tensor
+        )
 
     val_data = CICIDSDataset(
-        features_file=f"{val_data_path}/val_features.pkl",
-        target_file=f"{val_data_path}/val_labels.pkl",
+        features_file=f"{data_path}/processed/val/val_features.pkl",
+        target_file=f"{data_path}/processed/val/val_labels.pkl",
         transform=torch.tensor,
         target_transform=torch.tensor
     )
 
     test_data = CICIDSDataset(
-        features_file=f"{test_data_path}/test_features.pkl",
-        target_file=f"{test_data_path}/test_labels.pkl",
+        features_file=f"{data_path}/processed/test/test_features.pkl",
+        target_file=f"{data_path}/processed/test/test_labels.pkl",
         transform=torch.tensor,
         target_transform=torch.tensor
     )
@@ -72,54 +68,17 @@ def get_dataset(train_data_path="/Users/othmanebelarbi/Desktop/Toshiba/DBN-FL/da
     return train_data, val_data, test_data
 
 
-def get_balanced_dataset(train_data_path="/Users/othmanebelarbi/Desktop/Toshiba/DBN-FL/datasets/train",
-                         val_data_path="/Users/othmanebelarbi/Desktop/Toshiba/DBN-FL/datasets/val",
-                         test_data_path="/Users/othmanebelarbi/Desktop/Toshiba/DBN-FL/datasets/test"):
-
-    train_data = CICIDSDataset(
-        features_file=f"{train_data_path}/train_features_balanced.pkl",
-        target_file=f"{train_data_path}/train_labels_balanced.pkl",
-        transform=torch.tensor,
-        target_transform=torch.tensor
-    )
-
-    val_data = CICIDSDataset(
-        features_file=f"{val_data_path}/val_features.pkl",
-        target_file=f"{val_data_path}/val_labels.pkl",
-        transform=torch.tensor,
-        target_transform=torch.tensor
-    )
-
-    test_data = CICIDSDataset(
-        features_file=f"{test_data_path}/test_features.pkl",
-        target_file=f"{test_data_path}/test_labels.pkl",
-        transform=torch.tensor,
-        target_transform=torch.tensor
-    )
-
-    return train_data, val_data, test_data
-
-
-def load_data():
+def load_data(data_path: str, balanced: bool, batch_size: int):
     """Load training, validation and test set."""
 
     # Get the datasets
-    train_data, val_data, test_data = get_dataset()
-
-    samples_weight = utils.get_samples_weight(train_data.labels['label'])
-    sampler = torch.utils.data.sampler.WeightedRandomSampler(
-        samples_weight,
-        len(samples_weight),
-        replacement=True
-    )
-
-    batch_size = 64
+    train_data, val_data, test_data = get_dataset(data_path=data_path, balanced=balanced)
 
     # Create the dataloaders - for training, validation and testing
     train_loader = torch.utils.data.DataLoader(
         dataset=train_data,
         batch_size=batch_size,
-        sampler=sampler
+        shuffle=True
     )
     valid_loader = torch.utils.data.DataLoader(
         dataset=val_data,
