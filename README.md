@@ -56,17 +56,19 @@ It will generate multiple pickle files that will we use to train and evaluate ou
 Once the data is ready to be used, you can train the models using configs files. Config files are in `.json` format:
 ```json
     {
-        "name": "recurrent_neural_network",                 // model name
-        "model": {
-            "type": "RNN",
+        "name": "deep_belief_network",
+        "model": {                                       
+            "type": "DBN",
             "args": {                                       // model parameters
-                "input_size": 61,
-                "sequence_length": 1,
-                "hidden_size": 64,
-                "num_layers": 3,
-                "nonlinearity": "tanh",
-                "dropout": 0.3,
-                "output_size": 1
+                "n_visible": 47,
+                "n_hidden": "(128, 128, 64)",
+                "n_classes": 6,
+                "learning_rate": "(0.1, 0.1, 0.1)",
+                "momentum": "(0.9, 0.9, 0.9)",
+                "decay": "(0, 0, 0)",
+                "batch_size": "(64, 64, 64)",
+                "num_epochs": "(10, 10, 10)",
+                "k": "(1, 1, 1)"
             }
         },
         "data_loader": {
@@ -84,31 +86,24 @@ Once the data is ready to be used, you can train the models using configs files.
             }
         },
         "loss": {
-            "type": "BCEWithLogitsLoss",                    // loss function
+            "type": "CrossEntropyLoss",                     // loss function
             "args": {
                 "reduction": "mean"
             }
         },
-        "lr_scheduler": {
-            "type": "StepLR",                               // learning rate scheduler
-            "args": {
-                "step_size": 1,
-                "gamma": 0.95
-            }
-        },
         "trainer": {
-            "num_epochs": 5                                // number of training epochs
+            "num_epochs": 30                                // number of training epochs
         }
     }
 ```
 
 Additional configurations can be added in the future, currently to start our RNN and NN scripts please follow these simple commmands:
 ```bash
-    # train the recurrent neural network
-    $ python main.py --config ./configs/recurrentNeuralNetwork.json
+    # train the deep belief network
+    $ python main.py --config ./configs/deepBeliefNetwork.json.json
 
-    # train the neural network
-    $ python main.py --config ./configs/neuralNetwork.json
+    # train the multi-layer perceptron
+    $ python main.py --config ./configs/multilayerPerceptron.json
 ```
 
 ## Files and Folders structure
@@ -157,8 +152,7 @@ Additional configurations can be added in the future, currently to start our RNN
 
 ## Requirements
 
-All the experiments were conducted using a 64-bit Intel(R) Core(TM) i7-7500U CPU with 16GB RAM in a Ubuntu-Linux environment. The models have been implemented and trained in Python v3.8.2 using the Pytorch v1.10.2 library.
-
+All the experiments were conducted using a 64-bit Intel(R) Core(TM) i7-7500U CPU with 16GB RAM in Windows 10 environment. The models have been implemented in Python v3.8.2 using the PyTorch v1.9.0 library.
 ## Authors
 
 **Othmane Belarbi**, **Theo Spyridopoulos**, **Aftab Khan** and **Pietro Carnelli**
