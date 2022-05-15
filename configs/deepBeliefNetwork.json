@@ -1,7 +1,7 @@
 {
-    "name": "neural_network",
+    "name": "deep_belief_network",
     "model": {
-        "type": "NN",
+        "type": "DBN",
         "args": {
             "n_visible": 47,
             "n_hidden": "(128, 128, 64)",
@@ -35,6 +35,6 @@
         }
     },
     "trainer": {
-        "num_epochs": 10
+        "num_epochs": 30
     }
 }
