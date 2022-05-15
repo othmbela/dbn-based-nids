@@ -10,7 +10,7 @@ class RBM(nn.Module):
     """This class implements a Binary Restricted Boltzmann Machine."""
 
     def __init__(self,
-                 n_visible=47,
+                 n_visible=49,
                  n_hidden=128,
                  learning_rate=0.1,
                  momentum=0.9,

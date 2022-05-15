@@ -9,7 +9,7 @@ class DBN(nn.Module):
     """This class implements a Deep Belief Networks."""
 
     def __init__(self,
-                 n_visible=47,
+                 n_visible=49,
                  n_hidden=(128, 128, 64),
                  n_classes=6,
                  learning_rate=(0.1, 0.1, 0.1),
@@ -197,7 +197,7 @@ class DBN(nn.Module):
             dataset = torch.utils.data.TensorDataset(tensor_x, tensor_y)
             input_data_loader = torch.utils.data.DataLoader(
                 dataset=dataset,
-                batch_size=model.batch_size[i],
+                batch_size=self.batch_size[i],
                 shuffle=True
             )
 
