@@ -30,7 +30,6 @@ utils.set_seed(42)
 torch.backends.cudnn.determinstic = True
 torch.backends.cudnn.benchmark = False
 
-
 def main(config):
     """Centralised"""
 
@@ -57,7 +56,6 @@ def main(config):
         model=model,
         criterion=criterion,
         optimizer=optimizer,
-        scheduler=scheduler,
         train_loader=train_loader,
         valid_loader=valid_loader,
         num_epochs=config["trainer"]["num_epochs"],
@@ -65,7 +63,7 @@ def main(config):
     )
     logging.info(f'{config["name"]} model trained!')
 
-    labels = ['not reordered', 'reordered']
+    labels = ['Benign', 'Botnet ARES', 'Brute Force', 'DoS/DDoS', 'PortScan', 'Web Attack']
 
     logging.info("Training Set -- Classification Report", end="\n\n")
     logging.info(classification_report(
