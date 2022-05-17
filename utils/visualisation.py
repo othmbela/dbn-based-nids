@@ -51,7 +51,7 @@ def plot_roc_curve(y_test, y_score, labels, save=False, save_dir=None, filename=
     roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
 
     # Plot ROC curve
-    fig = plt.figure(figsize=(7, 5))
+    fig = plt.figure(figsize=(14, 10))
     plt.plot(fpr["micro"], tpr["micro"], label='micro-average ROC curve (area = {0:0.4f})'.format(roc_auc["micro"]))
     for i in range(n_classes):
         plt.plot(fpr[i], tpr[i], label='ROC curve of class {0} (area = {1:0.4f})'.format(labels[i], roc_auc[i]))
