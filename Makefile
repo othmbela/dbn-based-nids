@@ -20,7 +20,11 @@ init: $(BIN)/activate
 	mkdir -p ./data/raw
 
 
-run: prepare_venv
+dataset: init
+	$(BIN)/python ./preprocessing/cicids2017.py
+
+
+run: init
 	$(BIN)/python main.py --config ./configs/deepBeliefNetwork.json
 	$(BIN)/python main.py --config ./configs/multilayerPerceptron.json
 
