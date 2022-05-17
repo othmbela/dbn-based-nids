@@ -44,7 +44,7 @@ In this repository, we propose a multi-class classification NIDS based on Deep B
 
 * Download the dataset from [here](https://www.unb.ca/cic/datasets/ids-2017.html).
 * Move the CSV files to the following directory ***./data/raw/***
-* Then, create and pre-process the dataset using this following command line:
+* Afterwards, the dataset must be pre-processed using this following command line:
 ```bash
     $ make dataset
 ```
@@ -60,15 +60,15 @@ Once the data is ready to be used, you can train the models using configs files.
         "model": {                                       
             "type": "DBN",
             "args": {                                       // model parameters
-                "n_visible": 47,
-                "n_hidden": "(128, 128, 64)",
+                "n_visible": 49,
+                "n_hidden": "(128, 256, 128, 128, 64)",
                 "n_classes": 6,
-                "learning_rate": "(0.1, 0.1, 0.1)",
-                "momentum": "(0.9, 0.9, 0.9)",
-                "decay": "(0, 0, 0)",
-                "batch_size": "(64, 64, 64)",
-                "num_epochs": "(10, 10, 10)",
-                "k": "(1, 1, 1)"
+                "learning_rate": "(0.1, 0.1, 0.1, 0.1, 0.1)",
+                "momentum": "(0.9, 0.9, 0.9, 0.9, 0.9)",
+                "decay": "(0, 0, 0, 0, 0)",
+                "batch_size": "(64, 64, 64, 64, 64)",
+                "num_epochs": "(10, 10, 10, 10, 10)",
+                "k": "(1, 1, 1, 1, 1)"
             }
         },
         "data_loader": {
@@ -105,6 +105,7 @@ Additional configurations can be added in the future, currently to start our RNN
     # train the multi-layer perceptron
     $ python main.py --config ./configs/multilayerPerceptron.json
 ```
+
 
 ## Files and Folders structure
 
@@ -144,15 +145,24 @@ Additional configurations can be added in the future, currently to start our RNN
     ├── venv/                                               # virtual environment.
     │
     ├── .gitignore
+    ├── LICENSE
     ├── main.py
     ├── Makefile
     ├── README.md                                           # top-level README for this project.
     └── requirements.txt                                    # requirements.txt file for reproducing the experiments.
 ```
 
+
 ## Requirements
 
 All the experiments were conducted using a 64-bit Intel(R) Core(TM) i7-7500U CPU with 16GB RAM in Windows 10 environment. The models have been implemented in Python v3.8.2 using the PyTorch v1.9.0 library.
+
+
+## License
+
+This project is released under the [Apache 2.0 license](LICENSE).
+
+
 ## Authors
 
-**Othmane Belarbi**, **Theo Spyridopoulos**, **Aftab Khan** and **Pietro Carnelli**
+**Othmane Belarbi**, **Aftab Khan**, **Pietro Carnelli** and **Theodoros Spyridopoulos**,
