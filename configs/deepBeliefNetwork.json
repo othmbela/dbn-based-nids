@@ -17,7 +17,8 @@
     "data_loader": {
         "type": "InstacartDataLoader",
         "args": {
-            "batch_size": 128
+            "batch_size": 128,
+            "balanced": false
         }
     },
     "optimizer": {

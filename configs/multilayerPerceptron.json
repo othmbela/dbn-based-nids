@@ -1,5 +1,5 @@
 {
-    "name": "multilayer-perceptron",
+    "name": "multilayer_perceptron",
     "model": {
         "type": "MLP",
         "args": {
@@ -12,7 +12,8 @@
     "data_loader": {
         "type": "CICIDS2017DataLoader",
         "args": {
-            "batch_size": 64
+            "batch_size": 64,
+            "balanced": false
         }
     },
     "optimizer": {
@@ -20,8 +21,7 @@
         "args": {
             "lr": 0.02,
             "momentum": 0.9,
-            "weight_decay": 0,
-            "amsgrad": false
+            "weight_decay": 0
         }
     },
     "loss": {
