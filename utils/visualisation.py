@@ -31,6 +31,8 @@ def plot_confusion_matrix(y_true, y_pred, labels, save=False, save_dir=None, fil
     plt.ylabel("True label")
     plt.title("Recall Matrix")
 
+    fig.tight_layout()
+    
     if save:
         fig.savefig(os.path.join(save_dir, filename))
 
@@ -64,7 +66,9 @@ def plot_roc_curve(y_test, y_score, labels, save=False, save_dir=None, filename=
     plt.title('ROC curve')
     plt.legend(loc="lower right")
     plt.grid()
-    plt.show()
+
+    fig.tight_layout()
+
     if save:
         fig.savefig(os.path.join(save_dir, filename))
 
@@ -89,6 +93,8 @@ def plot_precision_recall_curve(y_test, y_score, labels, save=False, save_dir=No
     plt.title('Precision vs. Recall curve')
     plt.legend(loc="best")
     plt.grid()
-    plt.show()
+    
+    fig.tight_layout()
+    
     if save:
         fig.savefig(os.path.join(save_dir, filename))
