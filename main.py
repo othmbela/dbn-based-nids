@@ -1,4 +1,6 @@
 from sklearn.metrics import classification_report, f1_score
+import pandas as pd
+import numpy as np
 import argparse
 import logging
 import os
@@ -8,7 +10,7 @@ import torch.optim as optim
 
 from logger import setup_logging
 from utils import (
-    datasets,
+    dataset,
     models,
     test,
     train,
@@ -19,7 +21,7 @@ from utils import (
 
 LOG_CONFIG_PATH = os.path.join(os.path.abspath("."), "logger", "logger_config.json")
 LOG_DIR   = os.path.join(os.path.abspath("."), "logs")
-DATA_DIR  = os.path.join(os.path.abspath('.'), "data", "processed")
+DATA_DIR  = os.path.join(os.path.abspath('.'), "data")
 IMAGE_DIR = os.path.join(os.path.abspath("."), "images")
 MODEL_DIR = os.path.join(os.path.abspath("."), "checkpoints")
 
@@ -42,17 +44,19 @@ def main(config):
     model.to(DEVICE)
 
     logging.info("Loading dataset...")
-    train_loader, valid_loader, test_loader = datasets.load_data(
+    train_loader, valid_loader, test_loader = dataset.load_data(
         data_path=DATA_DIR,
-        batch_size=config["data_loader"]["args"]["batch_size"]
+        balanced=config["data_loader"]["args"]["balanced"],
+        batch_size=config["data_loader"]["args"]["batch_size"],
     )
     logging.info("Dataset loaded!")
 
+    # TODO: Optimiser as an array
     logging.info("Start training the model...")
-    optimizer = getattr(torch.optim, config["optimizer"]["type"])(params=model.parameters(), **config["optimizer"]["args"])
+    optimizer = [getattr(torch.optim, config["optimizer"]["type"])(params=model.parameters(), **config["optimizer"]["args"])]
     criterion = getattr(torch.nn, config["loss"]["type"])(**config["loss"]["args"])
 
-    _ = train(
+    train_history = train(
         model=model,
         criterion=criterion,
         optimizer=optimizer,
@@ -63,48 +67,98 @@ def main(config):
     )
     logging.info(f'{config["name"]} model trained!')
 
-    labels = ['Benign', 'Botnet ARES', 'Brute Force', 'DoS/DDoS', 'PortScan', 'Web Attack']
+    train_output_true = train_history["train"]["output_true"]
+    train_output_pred = train_history["train"]["output_pred"]
+    valid_output_true = train_history["valid"]["output_true"]
+    valid_output_pred = train_history["valid"]["output_pred"]
 
-    logging.info("Training Set -- Classification Report", end="\n\n")
+    labels = ["Benign", "Botnet ARES", "Brute Force", "DoS/DDoS", "PortScan", "Web Attack"]
+
+    ## Training Set results
+    logging.info('Training Set -- Classification Report')
     logging.info(classification_report(
-        y_true=history['train']['output_true'],
-        y_pred=history['train']['output_pred'],
+        y_true=train_output_true,
+        y_pred=train_output_pred,
+        target_names=labels
+    ))
+    
+    visualisation.plot_confusion_matrix(
+        y_true=train_output_true,
+        y_pred=train_output_pred,
+        labels=labels,
+        save=True,
+        save_dir=IMAGE_DIR,
+        filename=f'{config["name"]}_train_confusion_matrix.pdf'
+    )
+
+    ## Validation Set results
+    logging.info('Validation Set -- Classification Report')
+    logging.info(classification_report(
+        y_true=valid_output_true,
+        y_pred=valid_output_pred,
         target_names=labels
     ))
 
-    logging.info("Validation Set -- Classification Report", end="\n\n")
-    logging.info(classification_report(
-        y_true=history['validation']['output_true'],
-        y_pred=history['validation']['output_pred'],
-        target_names=labels
-    ))
+    visualisation.plot_confusion_matrix(
+        y_true=valid_output_true,
+        y_pred=valid_output_pred,
+        labels=labels,
+        save=True,
+        save_dir=IMAGE_DIR,
+        filename=f'{config["name"]}_train_confusion_matrix.pdf'
+    )
 
     logging.info(f'Evaluate {config["name"]} model')
-    testing_history = test(
+    test_history = test(
         model=model,
         criterion=criterion,
         test_loader=test_loader,
         device=DEVICE
     )
 
-    y_true = testing_history["test"]["output_true"]
-    y_pred = testing_history["test"]["output_pred"]
+    test_output_true = test_history["test"]["output_true"]
+    test_output_pred = test_history["test"]["output_pred"]
+    test_output_pred_prob = test_history["test"]["output_pred_prob"]
 
-    logging.info(f'Classification Report {config["name"]}\n')
+    ## Testing Set results
+    logging.info(f'Testing Set -- Classification Report {config["name"]}\n')
     logging.info(classification_report(
-        y_true=y_true,
-        y_pred=y_pred,
+        y_true=test_output_true,
+        y_pred=test_output_pred,
         target_names=labels
     ))
 
     utils.mkdir(IMAGE_DIR)
     visualisation.plot_confusion_matrix(
-        y_true=y_true,
-        y_pred=y_pred,
+        y_true=test_output_true,
+        y_pred=test_output_pred,
         labels=labels,
         save=True,
         save_dir=IMAGE_DIR,
-        filename=f'{config["name"]}_test_confusion_matrix.png'
+        filename=f'{config["name"]}_test_confusion_matrix.pdf'
+    )
+
+    y_test = pd.get_dummies(test_output_true).values
+    y_score = np.array(test_output_pred_prob)
+
+    # Plot ROC curve
+    visualisation.plot_roc_curve(
+        y_test=y_test,
+        y_score=y_score,
+        labels=labels,
+        save=True,
+        save_dir=IMAGE_DIR,
+        filename=f'{config["name"]}_roc_curve.pdf'
+    )
+
+    # Plot Precision vs. Recall curve
+    visualisation.plot_precision_recall_curve(
+        y_test=y_test,
+        y_score=y_score,
+        labels=labels,
+        save=True,
+        save_dir=IMAGE_DIR,
+        filename=f'{config["name"]}_prec_recall_curve.pdf'
     )
 
     path = os.path.join(MODEL_DIR, f'{config["name"]}.pt')
@@ -112,7 +166,6 @@ def main(config):
     torch.save({
         'epoch': config["trainer"]["num_epochs"],
         'model_state_dict': model.state_dict(),
-        'optimizer_state_dict': optimizer.state_dict(),
     }, path)
 
 
