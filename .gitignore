@@ -145,6 +145,6 @@ cython_debug/
 *.pt
 *.npz
 *.csv
-/images
 /checkpoints
-*.log
+/images
+/logs
