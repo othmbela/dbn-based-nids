@@ -12,12 +12,14 @@
 * [Usage](#usage)
 * [Files and Folders structure](#files-and-folders-structure)
 * [Requirements](#requirements)
+* [References](#references)
+* [License](#license)
 * [Authors](#authors)
 
 
 ## Introduction
 
-In this repository, we propose a multi-class classification NIDS based on Deep Belief Networks (DBNs). DBN is a generative graphical model formed by stacking multiple Restricted Boltzmann Machines (RBMs). It can identify and learn high-dimensional representations due to its deep architecture. We conducted multiple experiments using the CICIDS2017 dataset with various class-balancing techniques.
+In this repository, we propose a multi-class classification NIDS based on Deep Belief Networks (DBNs). DBN is a generative graphical model formed by stacking multiple Restricted Boltzmann Machines (RBMs). It can identify and learn high-dimensional representations due to its deep architecture. We conducted multiple experiments using the CICIDS2017 dataset [[1]](#1) with various class-balancing techniques.
 
 
 ## Installation
@@ -156,6 +158,13 @@ Additional configurations can be added in the future, currently to start our RNN
 ## Requirements
 
 All the experiments were conducted using a 64-bit Intel(R) Core(TM) i7-7500U CPU with 16GB RAM in Windows 10 environment. The models have been implemented in Python v3.8.2 using the PyTorch v1.9.0 library.
+
+
+## References
+<a id="1">[1]</a> 
+Iman Sharafaldin, Arash Habibi Lashkari, and Ali A. Ghorbani, 
+“Toward Generating a New Intrusion Detection Dataset and Intrusion Traffic Characterization”,
+4th International Conference on Information Systems Security and Privacy (ICISSP), Portugal, January 2018
 
 
 ## License
