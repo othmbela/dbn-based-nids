@@ -51,11 +51,20 @@ def main(config):
     )
     logging.info("Dataset loaded!")
 
-    # TODO: Optimiser as an array
-    logging.info("Start training the model...")
-    optimizer = [getattr(torch.optim, config["optimizer"]["type"])(params=model.parameters(), **config["optimizer"]["args"])]
     criterion = getattr(torch.nn, config["loss"]["type"])(**config["loss"]["args"])
+    if config["model"]["type"] == "DBN":
+        optimizer = [
+            getattr(torch.optim, config["optimizer"]["type"])(params=m.parameters(), **config["optimizer"]["args"])
+            for m in model.models
+        ]
+        
+        # Pre-train the DBN model
+        logging.info("Start pre-training the model...")
+        model.fit(train_loader)
+    else:
+        optimizer = [getattr(torch.optim, config["optimizer"]["type"])(params=model.parameters(), **config["optimizer"]["args"])]
 
+    logging.info("Start training the model...")
     train_history = train(
         model=model,
         criterion=criterion,
