@@ -84,7 +84,8 @@ Once the data is ready to be used, you can train the models using configs files.
             "args": {
                 "lr": 0.001,                                // learning rate
                 "weight_decay": 0,                          // weight decay
-                "amsgrad": false
+                "amsgrad": false,
+                "balanced": false
             }
         },
         "loss": {
@@ -102,7 +103,7 @@ Once the data is ready to be used, you can train the models using configs files.
 Additional configurations can be added in the future, currently to start our RNN and NN scripts please follow these simple commmands:
 ```bash
     # train the deep belief network
-    $ python main.py --config ./configs/deepBeliefNetwork.json.json
+    $ python main.py --config ./configs/deepBeliefNetwork.json
 
     # train the multi-layer perceptron
     $ python main.py --config ./configs/multilayerPerceptron.json
