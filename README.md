@@ -63,14 +63,14 @@ Once the data is ready to be used, you can train the models using configs files.
             "type": "DBN",
             "args": {                                       // model parameters
                 "n_visible": 49,
-                "n_hidden": "(128, 256, 128, 128, 64)",
+                "n_hidden": [128, 256, 128, 128, 64],
                 "n_classes": 6,
-                "learning_rate": "(0.1, 0.1, 0.1, 0.1, 0.1)",
-                "momentum": "(0.9, 0.9, 0.9, 0.9, 0.9)",
-                "decay": "(0, 0, 0, 0, 0)",
-                "batch_size": "(64, 64, 64, 64, 64)",
-                "num_epochs": "(10, 10, 10, 10, 10)",
-                "k": "(1, 1, 1, 1, 1)"
+                "learning_rate": [0.1, 0.1, 0.1, 0.1, 0.1],
+                "momentum": [0.9, 0.9, 0.9, 0.9, 0.9],
+                "decay": [0, 0, 0, 0, 0],
+                "batch_size": [64, 64, 64, 64, 64],
+                "num_epochs": [10, 10, 10, 10, 10],
+                "k": [1, 1, 1, 1, 1]
             }
         },
         "data_loader": {
@@ -100,7 +100,7 @@ Once the data is ready to be used, you can train the models using configs files.
     }
 ```
 
-Additional configurations can be added in the future, currently to start our RNN and NN scripts please follow these simple commmands:
+Additional configurations can be added in the future, currently to start our DBN and MLP scripts please follow these simple commmands:
 ```bash
     # train the deep belief network
     $ python main.py --config ./configs/deepBeliefNetwork.json
