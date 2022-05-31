@@ -1,6 +1,8 @@
+from tqdm import tqdm
+import logging
+
 import torch
 import torch.nn as nn
-from tqdm import tqdm
 
 from models.RBM import RBM
 
@@ -179,7 +181,7 @@ class DBN(nn.Module):
 
         # For every possible model (RBM)
         for i, model in enumerate(self.models):
-            print(f'Fitting layer {i+1}/{self.n_layers}')
+            logging.info(f'Fitting layer {i+1}/{self.n_layers}')
 
             # Fits the RBM
             model_mse, model_pl = model.fit(input_data_loader)

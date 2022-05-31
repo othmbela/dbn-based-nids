@@ -1,4 +1,5 @@
 from tqdm import tqdm
+import logging
 
 import torch
 import torch.nn as nn
@@ -265,7 +266,7 @@ class RBM(nn.Module):
             mse /= len(train_loader)
             pl /= len(train_loader)
 
-            print(
+            logging.info(
                 f"Epoch {epoch}/{self.num_epochs} - MSE: {mse} - Pseudo-Likelihood: {pl}")
 
         return mse, pl
