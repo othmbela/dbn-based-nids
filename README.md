@@ -19,6 +19,8 @@
 
 ## Introduction
 
+This is the source code for the paper entitled **["An Intrusion Detection System based on Deep Belief Networks"](https://arxiv.org/pdf/2207.02117.pdf)** accepted in the **4th International Conference on Science of Cyber Security (SciSec)**.
+
 In this repository, we propose a multi-class classification NIDS based on Deep Belief Networks (DBNs). DBN is a generative graphical model formed by stacking multiple Restricted Boltzmann Machines (RBMs). It can identify and learn high-dimensional representations due to its deep architecture. We conducted multiple experiments using the CICIDS2017 dataset [[1]](#1) with various class-balancing techniques.
 
 
@@ -181,7 +183,7 @@ This project is released under the [Apache 2.0 license](LICENSE).
 
 ## Citation
 
-If you find this code useful in your research, please consider citing:
+If you find this code useful in your research, please cite this article as:
 ```latex
 @misc{DBNbasedNIDS,
     doi = {10.48550/ARXIV.2207.02117},
