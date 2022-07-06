@@ -1,7 +1,7 @@
 # DBN-based NIDS on the CICIDS2017 Dataset
 [![python](https://img.shields.io/badge/python-3.8.2-blue?style=plastic&logo=python)](https://www.python.org/downloads/release/python-382/)
 [![pip](https://img.shields.io/badge/pypi-v22.1-informational?style=plastic&logo=pypi)](https://pypi.org/project/pip/22.1/)
-
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/an-intrusion-detection-system-based-on-deep/network-intrusion-detection-on-cicids2017)](https://paperswithcode.com/sota/network-intrusion-detection-on-cicids2017?p=an-intrusion-detection-system-based-on-deep)
 
 ## Table of contents
 
@@ -184,8 +184,8 @@ This project is released under the [Apache 2.0 license](LICENSE).
 ## Citation
 
 If you find this code useful in your research, please cite this article as:
-```latex
-@misc{DBNbasedNIDS,
+```bibtex
+@misc{belarbi2022intrusion,
     doi = {10.48550/ARXIV.2207.02117},
     url = {https://arxiv.org/abs/2207.02117},
     author = {Belarbi, Othmane and Khan, Aftab and Carnelli, Pietro and Spyridopoulos, Theodoros},
