@@ -176,3 +176,21 @@ This project is released under the [Apache 2.0 license](LICENSE).
 ## Authors
 
 **Othmane Belarbi**, **Aftab Khan**, **Pietro Carnelli** and **Theodoros Spyridopoulos**,
+
+
+
+## Citation
+
+If you find this code useful in your research, please consider citing:
+```latex
+@misc{DBNbasedNIDS,
+    doi = {10.48550/ARXIV.2207.02117},
+    url = {https://arxiv.org/abs/2207.02117},
+    author = {Belarbi, Othmane and Khan, Aftab and Carnelli, Pietro and Spyridopoulos, Theodoros},
+    keywords = {Cryptography and Security (cs.CR), Machine Learning (cs.LG), FOS: Computer and information sciences, FOS: Computer and information sciences},
+    title = {An Intrusion Detection System based on Deep Belief Networks},
+    publisher = {arXiv},
+    year = {2022},
+    copyright = {Creative Commons Attribution 4.0 International}
+}
+```
