@@ -185,14 +185,15 @@ This project is released under the [Apache 2.0 license](LICENSE).
 
 If you find this code useful in your research, please cite this article as:
 ```bibtex
-@misc{belarbi2022intrusion,
-    doi = {10.48550/ARXIV.2207.02117},
-    url = {https://arxiv.org/abs/2207.02117},
-    author = {Belarbi, Othmane and Khan, Aftab and Carnelli, Pietro and Spyridopoulos, Theodoros},
-    keywords = {Cryptography and Security (cs.CR), Machine Learning (cs.LG), FOS: Computer and information sciences, FOS: Computer and information sciences},
-    title = {An Intrusion Detection System based on Deep Belief Networks},
-    publisher = {arXiv},
-    year = {2022},
-    copyright = {Creative Commons Attribution 4.0 International}
+@InProceedings{belarbi2022intrusion,
+    author="Belarbi, Othmane and Khan, Aftab and Carnelli, Pietro and Spyridopoulos, Theodoros",
+    editor="Su, Chunhua and Sakurai, Kouichi and Liu, Feng",
+    title="An Intrusion Detection System Based on Deep Belief Networks",
+    booktitle="Science of Cyber Security",
+    year="2022",
+    publisher="Springer International Publishing",
+    address="Cham",
+    pages="377--392",
+    isbn="978-3-031-17551-0"
 }
 ```
